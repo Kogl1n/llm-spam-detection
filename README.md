@@ -90,8 +90,8 @@ Ask for structured output rather than free text:
 Requiring quoted evidence for each red flag reduces hallucinated verdicts and makes decisions auditable.
 
 ## Design tips
-Treat the email as untrusted data, not instructions. Put it in clearly marked delimiters, tell the model never to follow instructions inside it, and don't give the classifier tools or actions it could be tricked into using.
-Use one structured call instead of eight separate ones. It's cheaper, and the model can connect signals. For example, a failed DMARC check plus a request to change bank details plus urgency is far worse than any of them alone.
-Make hard technical failures overrule the LLM. A DMARC fail on a spoofed internal domain, or a known-malicious URL, should never be overridden by the model saying the mail "looks fine."
-Weight by impact. A false negative on a request to change payment details costs far more than one on a newsletter. Route anything involving money or credentials to quarantine or a warning banner at a lower confidence threshold.
-Add recipient context where you can. Does this person actually deal with invoices? Is the "vendor" in your vendor list? Have they emailed this sender before? Context like this catches business email compromise (BEC), which often has no technical red flags at all.
+ - Treat the email as untrusted data, not instructions. Put it in clearly marked delimiters, tell the model never to follow instructions inside it, and don't give the classifier tools or actions it could be tricked into using.
+ - Use one structured call instead of eight separate ones. It's cheaper, and the model can connect signals. For example, a failed DMARC check plus a request to change bank details plus urgency is far worse than any of them alone.
+- Make hard technical failures overrule the LLM. A DMARC fail on a spoofed internal domain, or a known-malicious URL, should never be overridden by the model saying the mail "looks fine."
+ - Weight by impact. A false negative on a request to change payment details costs far more than one on a newsletter. Route anything involving money or credentials to quarantine or a warning banner at a lower confidence threshold.
+ - Add recipient context where you can. Does this person actually deal with invoices? Is the "vendor" in your vendor list? Have they emailed this sender before? Context like this catches business email compromise (BEC), which often has no technical red flags at all.
